@@ -1,0 +1,8 @@
+move
+vim
+xml
+rob
+tmux
+jk
+gaze
+wq

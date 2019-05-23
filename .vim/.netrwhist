@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/ganxx'
+let g:netrw_dirhist_2='/home/ganxx/.vim'
+let g:netrw_dirhist_3='/home/ganxx/ROS/articulated_vehicle/src'
+let g:netrw_dirhist_4='/home/ganxx/ROS/articulated_vehicle/src/robot_sim_demo'
+let g:netrw_dirhist_5='/home/ganxx/ROS/articulated_vehicle/src'
+let g:netrw_dirhist_6='/home/ganxx/ROS/articulated_vehicle/src/articulate_vehicle_model'
+let g:netrw_dirhist_7='/home/ganxx/ROS/articulated_vehicle/src/articulate_vehicle_model/robots'
+let g:netrw_dirhist_8='/home/ganxx/.ssh'

@@ -20,14 +20,17 @@ set showcmd     " display incomplete commands
 set incsearch   " do incremental searching
 set noswapfile  " 禁止交换文件
 set showmatch   " 括号高亮匹配
-" set autochdir "自动切换当前编辑文件所在的工作目录
-set tags=~/path/tags 
+ "set autochdir "自动切换当前编辑文件所在的工作目录
+"set tags=~/path/tags 
+set tags=/path/to/tags 
+
 "首先我把 tag 文件的名字从“tags” 换成了 “.tags”，前面多加了一个点，这样即便放到项目中也不容易污染当前项目的文件，删除时也好删除，gitignore 也好写，默认忽略点开头的文件名即可。
 "前半部分 “./.tags; ”代表在文件的所在目录下（不是 “:pwd”返回的 Vim 当前目录）查找名字为 “.tags”的符号文件，
 "后面一个分号代表查找不到的话向上递归到父目录，直到找到 .tags 文件或者递归到了根目录还没找到，
 "这样对于复杂工程很友好，源代码都是分布在不同子目录中，而只需要在项目顶层目录放一个 .tags文件即可
 "逗号分隔的后半部分 .tags 是指同时在 Vim 的当前目录（“:pwd”命令返回的目录，可以用 :cd ..命令改变）下面查找 .tags 文件。
-set tags=./.tags;,.tags
+"set tags=./.tags;,.tags
+set tags=./tags,tags;$HOME
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
 
@@ -124,8 +127,8 @@ set cursorline         " 突出显示当前行,
 "autocmd InsertEnter 
 
 "统一Tab宽度为4
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=5
+set shiftwidth=5
 set scrolloff=5 "光标上下两侧最少保留的屏幕行数
 set cindent   " 使用C/C++语言的自动缩进方式
 set autowrite " 自动保存

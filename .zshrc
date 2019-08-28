@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/ganxx/.oh-my-zsh"
+  export ZSH="/home/ganxin/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -103,10 +103,22 @@ source $ZSH/oh-my-zsh.sh
 # ros
 source /opt/ros/kinetic/setup.zsh
 #source ~/ROS/DroidAI_ws/devel/setup.zsh
-#source ~/ROS/catkin_ws/devel/setup.zsh
-source ~/ROS/articulated_vehicle/devel/setup.zsh
+#source ~/ROS/articulated_vehicle/devel/setup.zsh
+#履带车仿真
+#source ~/ROS/ipc/devel/setup.zsh
+#工控机远程
+#source ~/ROS/ipc_real/devel/setup.zsh
+#export ROS_MASTER_URI=http://10.42.0.79:11311
+#export ROS_HOSTNAME=ganxin-ThinkPad-T430
+#export ROS_IP=10.42.0.1
+#履带车bag
+#source ~/ROS/ipc_test_n/devel/setup.zsh
+#履带车hector
+source ~/ROS/ipc_test_hector/devel/setup.zsh
+
+
 # 加入自动高亮插件
-source /home/ganxx/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/ganxin/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # 配置自动补全zsh-autosuggestion
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6' 
@@ -115,10 +127,12 @@ bindkey ',' autosuggest-accept
 #更换快捷键
 
 #安装了trash-cli插件，代替rm命令，被删除的文件会放入垃圾桶
-alias rm="trash"
+#alias rm="trash"
 
 #防止 copy 的时候覆盖已存在的文件, 带上 i 选项，文件已存在的时候，会提示，需要确认才能 copy#
-alias cp="cp -i"
+#alias cp="cp -i"
+alias cp2ros="rm -rf ~/ROS/ipc_real/src&&cp -r ~/git_resource/ipc_real/ipc/src ~/ROS/ipc_real "
+alias cp2git="rm -rf ~/git_resource/ipc_real/ipc/src&&cp -r ~/ROS/ipc_real/src ~/git_resource/ipc_real/ipc "
 
 #cat 某个文件，可以在终端直接输出文件内容，bat 相比 cat 增加了行号和颜色高亮
 

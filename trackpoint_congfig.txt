@@ -1,0 +1,27 @@
+Device 'TPPS/2 IBM TrackPoint':
+	Device Enabled (132):	1
+	Coordinate Transformation Matrix (134):	1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+	Device Accel Profile (262):	0
+	Device Accel Constant Deceleration (263):	0.200000
+	Device Accel Adaptive Deceleration (264):	20.000000
+	Device Accel Velocity Scaling (265):	1.000000
+	Device Product ID (252):	2, 10
+	Device Node (253):	"/dev/input/event8"
+	Evdev Axis Inversion (266):	0, 0
+	Evdev Axes Swap (268):	0
+	Axis Labels (269):	"Rel X" (142), "Rel Y" (143)
+	Button Labels (270):	"Button Left" (135), "Button Middle" (136), "Button Right" (137), "Button Wheel Up" (138), "Button Wheel Down" (139), "Button Horiz Wheel Left" (140), "Button Horiz Wheel Right" (141)
+	Evdev Scrolling Distance (271):	0, 0, 0
+	Evdev Middle Button Emulation (272):	1
+	Evdev Middle Button Timeout (273):	50
+	Evdev Middle Button Button (274):	2
+	Evdev Third Button Emulation (275):	0
+	Evdev Third Button Emulation Timeout (276):	1000
+	Evdev Third Button Emulation Button (277):	3
+	Evdev Third Button Emulation Threshold (278):	20
+	Evdev Wheel Emulation (279):	1
+	Evdev Wheel Emulation Axes (280):	6, 7, 4, 5
+	Evdev Wheel Emulation Inertia (281):	10
+	Evdev Wheel Emulation Timeout (282):	200
+	Evdev Wheel Emulation Button (283):	2
+	Evdev Drag Lock Buttons (284):	0

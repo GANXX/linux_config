@@ -5,11 +5,10 @@ if v:progname =~? "evim"
   finish
 endif
 
-" Use Vim settings, rather than Vi settings (much "better!).
-" This must be first, because it changes other options as a side effect.
+"This must be first, because it changes other options as a side effect.
 set nocompatible "关闭vi兼容模式，可以启用方向键和Backspace
 
-" allow backspacing over everything in insert mode
+"allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
 set nobackup    " do not keep a backup file, use versions instead
@@ -24,15 +23,8 @@ set showmatch   " 括号高亮匹配
 "set tags=~/path/tags 
 set tags=/path/to/tags 
 
-"首先我把 tag 文件的名字从“tags” 换成了 “.tags”，前面多加了一个点，这样即便放到项目中也不容易污染当前项目的文件，删除时也好删除，gitignore 也好写，默认忽略点开头的文件名即可。
-"前半部分 “./.tags; ”代表在文件的所在目录下（不是 “:pwd”返回的 Vim 当前目录）查找名字为 “.tags”的符号文件，
-"后面一个分号代表查找不到的话向上递归到父目录，直到找到 .tags 文件或者递归到了根目录还没找到，
-"这样对于复杂工程很友好，源代码都是分布在不同子目录中，而只需要在项目顶层目录放一个 .tags文件即可
-"逗号分隔的后半部分 .tags 是指同时在 Vim 的当前目录（“:pwd”命令返回的目录，可以用 :cd ..命令改变）下面查找 .tags 文件。
-"set tags=./.tags;,.tags
 set tags=./tags,tags;$HOME
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
+ "For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -98,7 +90,7 @@ endif
 " compatible.
 packadd matchit
 "键盘映射
-:imap jj <Esc>
+:imap <c-f> <Esc>
 :nmap J }
 :nmap K {
 :nmap 9 $
@@ -166,7 +158,6 @@ call plug#end()
 "设置主题
 set background=dark
 colorscheme hybrid
-
 " vim-easy-aling插件配置
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -179,9 +170,9 @@ nmap ga <Plug>(EasyAlign)
 nmap <F8> :LeaderfFunction!<CR>
 
 "打开最近使用的文件目录
-noremap <c-n> :LeaderfMru<cr>
+noremap <c-p> :LeaderfMru<cr>
 "打开buffer目录
-noremap <c-m> :LeaderfBuffer<cr>
+noremap <c-n> :LeaderfBuffer<cr>
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': ''  }
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WorkingDirectoryMode = 'Ac'
@@ -205,7 +196,7 @@ nmap <leader>j :NERDTreeToggle<CR>
 let Tlist_Show_One_File=1    " 只展示一个文件的taglist
 let Tlist_Exit_OnlyWindow=1  " 当taglist是最后以个窗口时自动退出
 let Tlist_Use_Right_Window=1 " 在右边显示taglist窗口
-let Tlist_Sort_Type="name"   " tag按名字排序
+"let Tlist_Sort_Type="name"   " tag按名字排序
 " 更新ctags标签文件快捷键设置
 noremap <F6> :!ctags -R<CR>  
 "设置taglist窗口大小
@@ -233,4 +224,15 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 if !isdirectory(s:vim_tags)
    silent! call mkdir(s:vim_tags, 'p')
 endif
+"把 opt里面的所有的头文件都建立索引然后加入ctag搜索中，
+"如果是新配置需要在include文件夹中 sudo ctags -R
+set tags+=/opt/ros/kinetic/include/tags
 "**************************************************
+
+"为了让tmux上面个的主题颜色显示正常
+if &term =~ '256color'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif

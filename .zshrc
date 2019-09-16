@@ -115,6 +115,8 @@ source /opt/ros/kinetic/setup.zsh
 #source ~/ROS/ipc_test_n/devel/setup.zsh
 #履带车hector
 source ~/ROS/ipc_test_hector/devel/setup.zsh
+#单独编译程序包
+alias catkin_pkg="catkin_make -DCATKIN_WHITELIST_PACKAGES="
 
 
 # 加入自动高亮插件
@@ -131,9 +133,18 @@ bindkey ',' autosuggest-accept
 
 #防止 copy 的时候覆盖已存在的文件, 带上 i 选项，文件已存在的时候，会提示，需要确认才能 copy#
 #alias cp="cp -i"
+#
+#git和ros之间进行转换
 alias cp2ros="rm -rf ~/ROS/ipc_real/src&&cp -r ~/git_resource/ipc_real/ipc/src ~/ROS/ipc_real "
 alias cp2git="rm -rf ~/git_resource/ipc_real/ipc/src&&cp -r ~/ROS/ipc_real/src ~/git_resource/ipc_real/ipc "
 
+#查找历史cmd命令快捷键
+alias findcommand="history | grep"
+#privoxy 使用终端ssr科学上网
+alias cmdssrstart="sudo /etc/init.d/privoxy start"
+alias cmdssrstop="sudo /etc/init.d/privoxy stop"
+alias cmdssrrestart="sudo /etc/init.d/privoxy restart"
+alias cmdssrstatus="sudo /etc/init.d/privoxy status"
 #cat 某个文件，可以在终端直接输出文件内容，bat 相比 cat 增加了行号和颜色高亮
 
 #ctrl+z 在vim 和 zsh终端之间切换 （默认是ctrl+z：vim到zsh，‘fg’是zsh到vim）

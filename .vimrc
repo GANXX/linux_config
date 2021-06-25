@@ -21,9 +21,9 @@ set noswapfile  " 禁止交换文件
 set showmatch   " 括号高亮匹配
  "set autochdir "自动切换当前编辑文件所在的工作目录
 "set tags=~/path/tags 
-set tags=/path/to/tags 
+"set tags=/path/to/tags 
 
-set tags=./tags,tags;$HOME
+"set tags=./tags,tags;$HOME
  "For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 
 " Don't use Ex mode, use Q for formatting
@@ -90,7 +90,8 @@ endif
 " compatible.
 packadd matchit
 "键盘映射
-:imap <c-f> <Esc>
+:imap <c-f> <Esc> 
+:imap jj <Esc>
 :nmap J }
 :nmap K {
 :nmap 9 $
@@ -121,9 +122,12 @@ set cursorline         " 突出显示当前行,
 "统一Tab宽度为4
 set tabstop=4 "设置制表符(tab按键)的宽度
 set softtabstop=4 "设置软制表符的宽度
-set shiftwidth=3
+set shiftwidth=4
+set ts=4
+set expandtab
 set scrolloff=5 "光标上下两侧最少保留的屏幕行数
 set cindent         "使用C/C++语言的自动缩进方式
+set cinoptions+=g0
 set autowrite       "自动保存
 
 
@@ -138,57 +142,111 @@ hi comment ctermfg=1
 "--------------------------------------------------------"
 "使用vim-plug管理插件
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/vim-easy-align'  " 自动对齐
-Plug 'jiangmiao/auto-pairs'     " 自动补全括号
-Plug 'scrooloose/nerdcommenter' " 快速代码注释
-Plug 'Yggdroot/LeaderF' "tagbar的升级版
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}      " 文件树
-Plug 'jistr/vim-nerdtree-tabs'  " 文件树
-Plug 'octol/vim-cpp-enhanced-highlight' "c++语法高亮
-Plug 'vim-airline/vim-airline' "下方状态栏插件
+Plug 'junegunn/vim-easy-align'                       " 自动对齐
+Plug 'jiangmiao/auto-pairs'                          " 自动补全括号
+Plug 'scrooloose/nerdcommenter'                      " 快速代码注释
+Plug 'Yggdroot/LeaderF'                              " tagbar的升级版
+Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'} " 文件树
+Plug 'jistr/vim-nerdtree-tabs'                       " 文件树
+Plug 'octol/vim-cpp-enhanced-highlight'              " c++语法高亮
+Plug 'vim-airline/vim-airline'                       " 下方状态栏插件
 Plug 'vim-airline/vim-airline-themes'
-Plug 'yggdroot/indentline' "添加缩进线
-Plug 'w0ng/vim-hybrid' "主题
-Plug 'itchyny/vim-cursorword' "自动下划线单词
-Plug 'lfv89/vim-interestingwords' "多选择单词标记
-Plug 'mbbill/echofunc' "提示函数原型
-Plug 'ludovicchabant/vim-gutentags' "自动添加tag文件
+Plug 'yggdroot/indentline'                           " 添加缩进线
+Plug 'w0ng/vim-hybrid'                               " 主题
+Plug 'itchyny/vim-cursorword'                        " 自动下划线单词
+Plug 'lfv89/vim-interestingwords'                    " 多选择单词高亮标记
+Plug 'mbbill/echofunc'                               " 提示函数原型
+Plug 'ludovicchabant/vim-gutentags'                  " 自动添加tag文件
+Plug 'tpope/vim-surround'                          " 快速给一段文本加上括号
+Plug 'rking/ag.vim'                          " 全局搜索插件
+Plug 'preservim/tagbar'                          " 全局搜索插件
 call plug#end()
 
-"设置主题
+"设置主题syntax on
+syntax enable
+set t_Co=256
+"colorscheme molokai
 set background=dark
 colorscheme hybrid
 " vim-easy-aling插件配置
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" vim-surround 配置
+"vmap " S"
+"vmap ' S'
+"vmap ` S`
+"vmap [ S[
+"vmap ( S(
+"vmap { S{
+"vmap } S}
+"vmap ] S]
+"vmap ) S)
+"vmap > S>
+
+" ag.vim 全局搜索插件
+" Ubuntu需要 sudo apt-get install silversearcher-ag 来配合
+" 使用 :Ag 
+
+
 " nerdcommenter 快速代码注释
 " 使用 <leader> ci 可以快速的注释和取消注释
 
-" LeaderF 配置
-" 按i进入模糊匹配模式，TAB返回选择模式
-nmap <F8> :LeaderfFunction!<CR>
+"tarbar 
+nmap <leader>t :TagbarToggle<CR>
 
-"打开最近使用的文件目录
+" LeaderF 配置------------------------------------
+" 按i进入模糊匹配模式，TAB返回选择模式
+" <leader f> 搜索当前目录下面的文件
+nmap <F8> :LeaderfFunction!<CR>
+"搜索当前文件中的某个单词
+noremap <c-m> :LeaderfLine<cr>
+"搜索最近使用过的文件
 noremap <c-p> :LeaderfMru<cr>
-"打开buffer目录
+"搜索buffer目录下的文件
 noremap <c-n> :LeaderfBuffer<cr>
+"忽略这些文件
+let g:Lf_WildIgnore = {
+            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \}
+ 
+" 按Esc键退出函数列表
+let g:Lf_NormalMap = {
+	\ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+	\ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+	\ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+	\ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+	\ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+	\ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+	\ }
+
+
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': ''  }
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
 let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WindowHeight = 0.50
+let g:Lf_WindowHeight = 0.60
 let g:Lf_CacheDirectory = expand('~/.vim/cache')
 let g:Lf_ShowRelativePath = 0
 let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'powerline'
 let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+"--------------------------------------------
 
-"nerdtree 配置
+" -- MiniBufferExplorer --
+let g:miniBufExplMapWindowNavVim = 1 " 按下Ctrl+h/j/k/l，可以切换到当前窗口的上下左右窗口
+let g:miniBufExplMapWindowNavArrows = 1 " 按下Ctrl+箭头，可以切换到当前窗口的上下左右窗口
+let g:miniBufExplMapCTabSwitchBufs = 1 " 启用以下两个功能：Ctrl+tab移到下一个buffer并在当前窗口打开；Ctrl+Shift+tab移到上一个buffer并在当前窗口打开；ubuntu好像不支持
+let g:miniBufExplMapCTabSwitchWindows = 1 " 启用以下两个功能：Ctrl+tab移到下一个窗口；Ctrl+Shift+tab移到上一个窗口；ubuntu好像不支持
+let g:miniBufExplModSelTarget = 1    " 不要在不可编辑内容的窗口（如TagList窗口）中打开选中的buffer
+
+
+"nerdtree 配置------------------------------------
 "当输入 vim . 打开空文档的时候 自动打开文件树
 autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 nmap <leader>j :NERDTreeToggle<CR>
+"找到文件在所的目录
+nnoremap <leader>v :NERDTreeFind<CR> 
 
 "taglist 配置Toggle<CR>
 
@@ -196,17 +254,18 @@ nmap <leader>j :NERDTreeToggle<CR>
 let Tlist_Show_One_File=1    " 只展示一个文件的taglist
 let Tlist_Exit_OnlyWindow=1  " 当taglist是最后以个窗口时自动退出
 let Tlist_Use_Right_Window=1 " 在右边显示taglist窗口
-"let Tlist_Sort_Type="name"   " tag按名字排序
+let Tlist_Sort_Type="name"   " tag按名字排序
 " 更新ctags标签文件快捷键设置
 noremap <F6> :!ctags -R<CR>  
 "设置taglist窗口大小
 let Tlist_WinHeight = 100
 let Tlist_WinWidth = 50
+"------------------------------------------------
 
 "gutentags**********************************
 "
 " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project','.vs']
 
 " 所生成的数据文件的名称
 let g:gutentags_ctags_tagfile = '.tags'
@@ -236,3 +295,9 @@ if &term =~ '256color'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
+
+"set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+"set enc=utf8
+"set fencs=utf8,gbk,gb2312,gb18030
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk

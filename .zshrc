@@ -1,6 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+ZSH_DISABLE_COMPFIX=ture
 # Path to your oh-my-zsh installation.
   export ZSH="/home/ganxin/.oh-my-zsh"
 
@@ -11,6 +12,7 @@
 
 #ZSH_THEME="robbyrussell"
 ZSH_THEME="af-magic"
+#ZSH_THEME="bureau"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -104,6 +106,13 @@ source $ZSH/oh-my-zsh.sh
 source /opt/ros/kinetic/setup.zsh
 #source ~/ROS/DroidAI_ws/devel/setup.zsh
 #source ~/ROS/articulated_vehicle/devel/setup.zsh
+
+#E100imu测试
+#source ~/ROS/model/devel/setup.zsh
+
+#E100无人物流项目
+#source ~/ROS/logistic_vehicle_share_SGMW/devel/setup.zsh
+#source ~/ROS/logistic_vehicle_share-debugging/devel/setup.zsh
 #履带车仿真
 #source ~/ROS/ipc/devel/setup.zsh
 #工控机远程
@@ -114,7 +123,11 @@ source /opt/ros/kinetic/setup.zsh
 #履带车bag
 #source ~/ROS/ipc_test_n/devel/setup.zsh
 #履带车hector
-source ~/ROS/ipc_test_hector/devel/setup.zsh
+#source ~/ROS/ipc_test_hector/devel/setup.zsh
+#工控机远程
+#export ROS_HOSTNAME=192.168.1.23
+#export ROS_MASTER_URI=http://192.168.1.50:11311
+#export ROS_IP=192.168.1.50
 #单独编译程序包
 alias catkin_pkg="catkin_make -DCATKIN_WHITELIST_PACKAGES="
 
@@ -141,10 +154,25 @@ alias cp2git="rm -rf ~/git_resource/ipc_real/ipc/src&&cp -r ~/ROS/ipc_real/src ~
 #查找历史cmd命令快捷键
 alias findcommand="history | grep"
 #privoxy 使用终端ssr科学上网
-alias cmdssrstart="sudo /etc/init.d/privoxy start"
-alias cmdssrstop="sudo /etc/init.d/privoxy stop"
-alias cmdssrrestart="sudo /etc/init.d/privoxy restart"
-alias cmdssrstatus="sudo /etc/init.d/privoxy status"
+#alias cmdssrstart="sudo /etc/init.d/privoxy start"
+#alias cmdssrstop="sudo /etc/init.d/privoxy stop"
+#alias cmdssrrestart="sudo /etc/init.d/privoxy restart"
+#alias cmdssrstatus="sudo /etc/init.d/privoxy status"
+alias cmdfqstart="export https_proxy=https://127.0.0.1:8888&&export http_proxy=http://127.0.0.1:8888"
+alias cmdfqstop="unset https_proxy&&unset http_proxy"
+
+alias scanlocaldevice="sudo arp-scan -I wlp3s0 --localnet"
+#git 代理
+alias gitssrstart="git config --global http.proxy http://127.0.0.1:8888&&git config --global https.proxy https://127.0.0.1:8888"
+alias gitssrstop="git config --unset http.proxy&&git config --unset https.proxy"
+ 
+#cmake 快捷键
+alias catkin_make_debug="catkin_make -DCMAKE_BUILD_TYPE=Debug "
+
+#自定义命令
+alias whatissize="du -sh"
+alias :q="exit"
+alias sshsgmw="sshpass -p ' ' ssh sgmw@192.168.1.50"
 #cat 某个文件，可以在终端直接输出文件内容，bat 相比 cat 增加了行号和颜色高亮
 
 #ctrl+z 在vim 和 zsh终端之间切换 （默认是ctrl+z：vim到zsh，‘fg’是zsh到vim）
@@ -160,3 +188,7 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+# for tda4
+export DDS_DOMAIN_ID=`cat ~/idds_xml/domain_config.txt`
+export DDS_DYNTYPE_XML_PATH=~/idds_xml/sysd_framework/xml
